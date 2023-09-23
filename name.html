@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Drawing</title>
+</head>
+<body style="margin: 0; overflow: hidden;">
+    <canvas id="myCanvas" width="800" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const context = canvas.getContext('2d');
+
+        let isDrawingLines = true; // Flag to switch between drawing lines and your name
+
+        // Function to draw the lines forming the letters "NAJ"
+        function drawLines() {
+            // Set background color to pitch (#DAC0A3)
+            context.fillStyle = '#DAC0A3';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Set your favorite color for the lines (Navy : #0F2C59)
+            context.strokeStyle = '#0F2C59';
+            context.lineWidth = 2; // Adjust line width as needed
+            context.fillText('NAJ', 400, 400);
+
+            // Define the positions of the lines to form the letters "NAJ"
+            const lines = [
+                // Letter "N"
+                { x1: 100, y1: 200, x2: 100, y2: 100 },
+                { x1: 100, y1: 100, x2: 150, y2: 200 },
+                { x1: 150, y1: 200, x2: 150, y2: 100 },
+
+                // Letter "A"
+                { x1: 160, y1: 200, x2: 175, y2: 100 },
+                { x1: 175, y1: 100, x2: 190, y2: 200 },
+                { x1: 165, y1: 150, x2: 185, y2: 150 },
+
+                // Letter "J"
+                { x1: 200, y1: 100, x2: 200, y2: 200 },
+                { x1: 200, y1: 200, x2: 230, y2: 200 },
+                { x1: 230, y1: 200, x2: 230, y2: 150 },
+            ];
+
+            // Draw the lines using the gl.LINES primitive
+            for (const line of lines) {
+                context.beginPath();
+                context.moveTo(line.x1, line.y1);
+                context.lineTo(line.x2, line.y2);
+                context.stroke();
+            }
+        }
+
+        // Function to clear the canvas
+        function clearCanvas() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Function to draw your name with a black background
+        function drawName() {
+            // Set background color to pitch navy (Navy : #0F2C59)
+            context.fillStyle = '#0F2C59';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Set your favorite color for the text (#DAC0A3)
+            context.fillStyle = '#DAC0A3';
+            context.font = '100px Arial';
+            context.fillText('NAJ', 200, 200);
+        }
+
+        // Animation loop
+        function animate() {
+            setTimeout(() => {
+                if (isDrawingLines) {
+                    clearCanvas();
+                    drawLines();
+                } else {
+                    clearCanvas();
+                    drawName();
+                }
+                isDrawingLines = !isDrawingLines; // Switch between lines and your name
+                animate(); // Repeat the animation
+            }, 3000); // Wait for 3 seconds and switch between lines and your name
+        }
+
+        animate(); // Start the animation loop
+    </script>
+</body>
+</html>
